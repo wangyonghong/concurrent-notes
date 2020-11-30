@@ -9,11 +9,12 @@ import java.util.concurrent.locks.LockSupport;
 @Slf4j(topic = "c.TestBiased")
 public class TestBiased {
 
-    static Thread t1,t2,t3;
+    static Thread t1, t2, t3;
 
     public static void main(String[] args) throws InterruptedException {
         test4();
     }
+
     private static void test4() throws InterruptedException {
         Vector<Dog> list = new Vector<>();
 
@@ -23,7 +24,7 @@ public class TestBiased {
                 Dog d = new Dog();
                 list.add(d);
                 synchronized (d) {
-                    log.debug(i + "\t" + ClassLayout.parseInstance(d).toPrintableSimple(true));
+                    log.debug(i + "\t" + ClassLayout.parseInstance(d).toPrintable());
                 }
             }
             LockSupport.unpark(t2);
@@ -35,11 +36,11 @@ public class TestBiased {
             log.debug("===============> ");
             for (int i = 0; i < loopNumber; i++) {
                 Dog d = list.get(i);
-                log.debug(i + "\t" + ClassLayout.parseInstance(d).toPrintableSimple(true));
+                log.debug(i + "\t" + ClassLayout.parseInstance(d).toPrintable());
                 synchronized (d) {
-                    log.debug(i + "\t" + ClassLayout.parseInstance(d).toPrintableSimple(true));
+                    log.debug(i + "\t" + ClassLayout.parseInstance(d).toPrintable());
                 }
-                log.debug(i + "\t" + ClassLayout.parseInstance(d).toPrintableSimple(true));
+                log.debug(i + "\t" + ClassLayout.parseInstance(d).toPrintable());
             }
             LockSupport.unpark(t3);
         }, "t2");
@@ -50,17 +51,17 @@ public class TestBiased {
             log.debug("===============> ");
             for (int i = 0; i < loopNumber; i++) {
                 Dog d = list.get(i);
-                log.debug(i + "\t" + ClassLayout.parseInstance(d).toPrintableSimple(true));
+                log.debug(i + "\t" + ClassLayout.parseInstance(d).toPrintable());
                 synchronized (d) {
-                    log.debug(i + "\t" + ClassLayout.parseInstance(d).toPrintableSimple(true));
+                    log.debug(i + "\t" + ClassLayout.parseInstance(d).toPrintable());
                 }
-                log.debug(i + "\t" + ClassLayout.parseInstance(d).toPrintableSimple(true));
+                log.debug(i + "\t" + ClassLayout.parseInstance(d).toPrintable());
             }
         }, "t3");
         t3.start();
 
         t3.join();
-        log.debug(ClassLayout.parseInstance(new Dog()).toPrintableSimple(true));
+        log.debug(ClassLayout.parseInstance(new Dog()).toPrintable());
     }
 }
 
