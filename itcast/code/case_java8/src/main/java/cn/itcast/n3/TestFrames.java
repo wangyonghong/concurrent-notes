@@ -1,8 +1,9 @@
 package cn.itcast.n3;
 
 public class TestFrames {
+
     public static void main(String[] args) {
-        Thread t1 = new Thread(){
+        Thread t1 = new Thread() {
             @Override
             public void run() {
                 method1(20);

@@ -8,14 +8,14 @@ public class Test9 {
     public static void main(String[] args) {
         Runnable task1 = () -> {
             int count = 0;
-            for (;;) {
+            for (; ; ) {
                 System.out.println("---->1 " + count++);
             }
         };
         Runnable task2 = () -> {
             int count = 0;
-            for (;;) {
-//                Thread.yield();
+            for (; ; ) {
+                // Thread.yield();
                 System.out.println("              ---->2 " + count++);
             }
         };

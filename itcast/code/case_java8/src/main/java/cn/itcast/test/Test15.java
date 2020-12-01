@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j(topic = "c.Test15")
 public class Test15 {
+
     public static void main(String[] args) throws InterruptedException {
         Thread t1 = new Thread(() -> {
             while (true) {

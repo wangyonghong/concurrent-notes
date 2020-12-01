@@ -19,12 +19,11 @@ public class Test14 {
         });
         t1.start();
 
-
         sleep(1);
         t1.interrupt();
     }
 
-    private static void test3() throws InterruptedException {
+    private static void test3() {
         Thread t1 = new Thread(() -> {
             log.debug("park...");
             LockSupport.park();
@@ -35,10 +34,9 @@ public class Test14 {
 
         sleep(1);
         t1.interrupt();
-
     }
 
     public static void main(String[] args) throws InterruptedException {
-        test4();
+        test3();
     }
 }

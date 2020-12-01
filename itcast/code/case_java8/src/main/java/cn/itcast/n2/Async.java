@@ -4,7 +4,9 @@ import cn.itcast.Constants;
 import cn.itcast.n2.util.FileReader;
 import lombok.extern.slf4j.Slf4j;
 
-
+/**
+ * 异步不等待
+ */
 @Slf4j(topic = "c.Async")
 public class Async {
 

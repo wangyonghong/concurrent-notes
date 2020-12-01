@@ -2,12 +2,11 @@ package cn.itcast.n3;
 
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.concurrent.TimeUnit;
-
 import static cn.itcast.n2.util.Sleeper.sleep;
 
 @Slf4j(topic = "c.TestJoin")
 public class TestJoin {
+
     static int r = 0;
     static int r1 = 0;
     static int r2 = 0;
@@ -27,7 +26,7 @@ public class TestJoin {
 
         // 线程执行结束会导致 join 结束
         log.debug("join begin");
-        t1.join(3000);
+        t1.join(1500);
         long end = System.currentTimeMillis();
         log.debug("r1: {} r2: {} cost: {}", r1, r2, end - start);
     }

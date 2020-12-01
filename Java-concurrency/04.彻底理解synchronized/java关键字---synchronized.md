@@ -2,28 +2,30 @@
 
 在学习知识前，我们先来看一个现象：
 
-	public class SynchronizedDemo implements Runnable {
-	    private static int count = 0;
-	
-	    public static void main(String[] args) {
-	        for (int i = 0; i < 10; i++) {
-	            Thread thread = new Thread(new SynchronizedDemo());
-	            thread.start();
-	        }
-	        try {
-	            Thread.sleep(500);
-	        } catch (InterruptedException e) {
-	            e.printStackTrace();
-	        }
-	        System.out.println("result: " + count);
-	    }
-	
-	    @Override
-	    public void run() {
-	        for (int i = 0; i < 1000000; i++)
-	            count++;
-	    }
-	}
+```java
+public class SynchronizedDemo implements Runnable {
+    private static int count = 0;
+
+    public static void main(String[] args) {
+        for (int i = 0; i < 10; i++) {
+            Thread thread = new Thread(new SynchronizedDemo());
+            thread.start();
+        }
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println("result: " + count);
+    }
+
+    @Override
+    public void run() {
+        for (int i = 0; i < 1000000; i++)
+            count++;
+    }
+}
+```
 
 开启了10个线程，每个线程都累加了1000000次，如果结果正确的话自然而然总数就应该是10 * 1000000 = 10000000。可就运行多次结果都不是这个数，而且每次运行结果都不一样。这是为什么了？有什么解决方案了？这就是我们今天要聊的事情。 
 
@@ -41,16 +43,18 @@
 ## 2.1 对象锁（monitor）机制 ##
 现在我们来看看synchronized的具体底层实现。先写一个简单的demo:
 
-	public class SynchronizedDemo {
-	    public static void main(String[] args) {
-	        synchronized (SynchronizedDemo.class) {
-	        }
-	        method();
-	    }
-	
-	    private static void method() {
-	    }
-	}
+```java
+public class SynchronizedDemo {
+    public static void main(String[] args) {
+        synchronized (SynchronizedDemo.class) {
+        }
+        method();
+    }
+
+    private static void method() {
+    }
+}
+```
 上面的代码中有一个同步代码块，锁住的是类对象，并且还有一个同步静态方法，锁住的依然是该类的类对象。编译之后，切换到SynchronizedDemo.class的同级目录之后，然后用**javap -v SynchronizedDemo.class**查看字节码文件：
 
 
@@ -72,17 +76,19 @@
 ## 2.2 synchronized的happens-before关系 ##
 在上一篇文章中讨论过[happens-before](https://juejin.im/post/5ae6d309518825673123fd0e)规则，抱着学以致用的原则我们现在来看一看Synchronized的happens-before规则，即监视器锁规则：对同一个监视器的解锁，happens-before于对该监视器的加锁。继续来看代码：
 
-	public class MonitorDemo {
-	    private int a = 0;
-	
-	    public synchronized void writer() {     // 1
-	        a++;                                // 2
-	    }                                       // 3
-	
-	    public synchronized void reader() {    // 4
-	        int i = a;                         // 5
-	    }                                      // 6
-	}
+```java
+public class MonitorDemo {
+    private int a = 0;
+
+    public synchronized void writer() {     // 1
+        a++;                                // 2
+    }                                       // 3
+
+    public synchronized void reader() {    // 4
+        int i = a;                         // 5
+    }                                      // 6
+}
+```
 
 该代码的happens-before关系如图所示：
 

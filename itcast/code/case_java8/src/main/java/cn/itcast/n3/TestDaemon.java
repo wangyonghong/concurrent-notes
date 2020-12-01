@@ -6,6 +6,7 @@ import static cn.itcast.n2.util.Sleeper.sleep;
 
 @Slf4j(topic = "c.TestDaemon")
 public class TestDaemon {
+
     public static void main(String[] args) {
         log.debug("开始运行...");
         Thread t1 = new Thread(() -> {
