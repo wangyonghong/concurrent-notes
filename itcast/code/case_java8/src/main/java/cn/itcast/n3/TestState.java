@@ -6,6 +6,7 @@ import java.io.IOException;
 
 @Slf4j(topic = "c.TestState")
 public class TestState {
+
     public static void main(String[] args) throws IOException {
         Thread t1 = new Thread("t1") {
             @Override
@@ -17,7 +18,7 @@ public class TestState {
         Thread t2 = new Thread("t2") {
             @Override
             public void run() {
-                while(true) { // runnable
+                while (true) { // runnable
 
                 }
             }
